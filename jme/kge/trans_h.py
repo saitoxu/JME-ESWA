@@ -1,6 +1,6 @@
 import torch
-from torch import nn
 import torch.nn.functional as F
+from torch import nn
 
 
 class TransH(nn.Module):
@@ -9,6 +9,7 @@ class TransH(nn.Module):
         self.entity_size = entity_size
         self.relation_size = relation_size
         self.dim = dim
+        self.output_dim = dim
         self.device = device
         self.entities = nn.Embedding(entity_size, dim)
         self.relations = nn.Embedding(relation_size, dim)

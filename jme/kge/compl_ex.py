@@ -8,6 +8,7 @@ class ComplEx(nn.Module):
         self.entity_size = entity_size
         self.relation_size = relation_size
         self.dim = dim
+        self.output_dim = dim * 2
         self.device = device
 
         self.entities_re = nn.Embedding(entity_size, dim)

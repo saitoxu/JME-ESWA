@@ -12,7 +12,7 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size.')
     parser.add_argument('--dim', type=int, default=64, help='Embedding size.')
     parser.add_argument('--lr', type=float, default=1e-4, help='Learning rate.')
-    parser.add_argument('--patience', type=int, default=10, help='Number of epoch for early stopping.')
+    parser.add_argument('--patience', type=int, default=5, help='Number of epoch for early stopping.')
     parser.add_argument('--Ks', nargs='?', default='[5,10,20]', help='Calculate metric@K when evaluating.')
     parser.add_argument('--model_path', nargs='?', default='', help='Model path for evaluation.')
     parser.add_argument('--use_boac', type=int, default=1, help='0: Without Behavior Overlap Aware Converter, 1: Full model.')

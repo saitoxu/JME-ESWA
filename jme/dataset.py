@@ -171,7 +171,6 @@ def load_user_consistencies(data_path: str, device: str):
     user_masters, job_masters = _load_masters(data_path)
     user_interactions = [set() for _ in range(len(user_masters))]
     user_similarities = [[] for _ in range(len(user_masters))]
-    tfidf_matrix = []
     for file_name in behavior_data:
         with open(f'{data_path}/{file_name}') as f:
             for line in f:
@@ -188,7 +187,7 @@ def load_user_consistencies(data_path: str, device: str):
     for user_id in range(len(user_masters)):
         avg_similarity = sum(user_similarities[user_id]) / len(user_similarities[user_id])
         consistencies.append(avg_similarity)
-    return torch.tensor(consistencies, dtype=torch.float, device=device), torch.tensor(tfidf_matrix, dtype=torch.float, device=device)
+    return torch.tensor(consistencies, dtype=torch.float, device=device)
 
 
 def _load_masters(data_path: str):

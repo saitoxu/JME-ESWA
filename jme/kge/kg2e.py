@@ -9,6 +9,7 @@ class KG2E(nn.Module):
         self.device = device
         self.margin = margin
         self.ke = dim
+        self.output_dim = dim * 2
 
         self.entity_emb = nn.Embedding(num_embeddings=entity_size, embedding_dim=dim)
         self.entity_covar = nn.Embedding(num_embeddings=entity_size, embedding_dim=dim)
