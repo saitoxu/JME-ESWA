@@ -1,13 +1,14 @@
 import os
-import torch
-from torch.utils.data import DataLoader
 from time import time
 
-from .parser import parse_args
+import torch
+from torch.utils.data import DataLoader
+
+from .dataset import KGDataset, Phase, RecDataset, ValOrTestDataset
 from .jme import JME
-from .dataset import RecDataset, KGDataset, ValOrTestDataset, Phase
-from .utils import EarlyStopping, seed_everything, evaluate, log_results
 from .logger import getLogger
+from .parser import parse_args
+from .utils import EarlyStopping, evaluate, log_results, seed_everything
 
 
 def train(train_rec_dataloader, train_kg_dataloader, model, optimizer, args, device, logger):
@@ -80,7 +81,13 @@ if __name__ == '__main__':
         item_entity_map=item_entity_map,
         use_boac=args.use_boac,
         use_bam=args.use_bam,
+        use_mbl=args.use_mbl,
         use_epl=args.use_epl,
+        user_masters=user_masters,
+        job_masters=job_masters,
+        user_consistencies=user_consistencies,
+        use_csw=args.use_csw,
+        consistency_weight=args.consistency_weight,
         kge=args.kge,
         device=device
     )

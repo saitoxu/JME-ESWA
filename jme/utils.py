@@ -1,9 +1,8 @@
 import os
 import random
+
 import numpy as np
 import torch
-from torch import nn, Tensor
-from typing import Optional, Callable
 
 from .metrics import calc_metrics
 
@@ -66,47 +65,3 @@ def distance(triplets):
     relations = triplets[:, 1, :]
     tails = triplets[:, 2, :]
     return (heads + relations - tails).norm(dim=1)
-
-
-class MyTripletMarginWithDistanceLoss(nn.Module):
-    reduction: str
-
-    def __init__(self, *, distance_function: Optional[Callable[[Tensor, Tensor], Tensor]] = None,
-                 swap: bool = False, reduction: str = 'mean'):
-        super(MyTripletMarginWithDistanceLoss, self).__init__()
-        self.reduction = reduction
-        self.distance_function: Optional[Callable[[Tensor, Tensor], Tensor]] = \
-            distance_function if distance_function is not None else nn.PairwiseDistance()
-        self.swap = swap
-
-    def forward(self, anchor: Tensor, positive: Tensor, negative: Tensor, margin: Tensor) -> Tensor:
-        return triplet_margin_with_distance_loss(anchor, positive, negative,
-                                                 distance_function=self.distance_function,
-                                                 margin=margin, swap=self.swap, reduction=self.reduction)
-
-
-def triplet_margin_with_distance_loss(
-    anchor: Tensor,
-    positive: Tensor,
-    negative: Tensor,
-    margin: Tensor,
-    *,
-    distance_function: Optional[Callable[[Tensor, Tensor], Tensor]] = None,
-    swap: bool = False,
-    reduction: str = "mean"
-) -> Tensor:
-    positive_dist = distance_function(anchor, positive)
-    negative_dist = distance_function(anchor, negative)
-
-    if swap:
-        swap_dist = distance_function(positive, negative)
-        negative_dist = torch.min(negative_dist, swap_dist)
-
-    output = torch.clamp(positive_dist - negative_dist + margin, min=0.0)
-
-    if reduction == 'mean':
-        return output.mean()
-    elif reduction == 'sum':
-        return output.sum()
-    else:
-        return output

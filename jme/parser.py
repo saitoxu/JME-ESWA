@@ -18,6 +18,9 @@ def parse_args():
     parser.add_argument('--use_boac', type=int, default=1, help='0: Without Behavior Overlap Aware Converter, 1: Full model.')
     parser.add_argument('--use_bam', type=int, default=1, help='0: Without Behavior Aware Margin Function, 1: Full model.')
     parser.add_argument('--use_epl', type=int, default=1, help='0: Without EPL module, 1: Full model.')
+    parser.add_argument('--use_mbl', type=int, default=1, help='0: Without MBL module, 1: Full model.')
+    parser.add_argument('--use_csw', type=int, default=1, help='0: Without Consistency and Similarity Weighting, 1: Full model.')
+    parser.add_argument('--consistency_weight', type=float, default=0.1, help='Consistency weight.')
     parser.add_argument('--neg_size', type=int, default=1, help='Negative sampling size.')
 
     args = parser.parse_args()
