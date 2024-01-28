@@ -166,7 +166,9 @@ class JME(nn.Module):
 
     def normalize(self):
         method = 'normalize'
-        modules = [self.mbl_module]
+        modules = []
+        if self.use_mbl:
+            modules.append(self.mbl_module)
         if self.use_epl:
             modules.append(self.epl_module)
         for module in modules:
