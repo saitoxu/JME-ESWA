@@ -15,7 +15,7 @@ class JME(nn.Module):
     def __init__(self, entity_size: int, relation_size: int, user_size: int, item_size: int, \
             behavior_size: int, dim: int, user_entity_map: torch.tensor, item_entity_map: torch.tensor, \
             use_boac: int, use_bam: int, use_mbl: int, use_epl: int, use_csw: int, kge: str, device: str, \
-            user_masters, job_masters, user_consistencies, consistency_weight: float):
+            user_masters, item_masters, user_consistencies, consistency_weight: float):
         super(JME, self).__init__()
         self.use_mbl = use_mbl == 1
         self.use_epl = use_epl == 1
@@ -29,7 +29,7 @@ class JME(nn.Module):
         self.user_entity_map = user_entity_map
         self.item_entity_map = item_entity_map
         self.user_masters = user_masters
-        self.job_masters = job_masters
+        self.item_masters = item_masters
         self.user_consistencies = user_consistencies
         self.consistency_weight = consistency_weight
 
@@ -157,7 +157,7 @@ class JME(nn.Module):
 
     def _calc_similarities(self, users, items):
         u_masters = self.user_masters[users, :]
-        i_masters = self.job_masters[items, :]
+        i_masters = self.item_masters[items, :]
 
         and_ui = (u_masters * i_masters)
         or_ui = (u_masters + i_masters) - and_ui

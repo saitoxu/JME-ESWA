@@ -4,7 +4,8 @@ from time import time
 import torch
 from torch.utils.data import DataLoader
 
-from .dataset import KGDataset, Phase, RecDataset, ValOrTestDataset
+from .dataset import (KGDataset, Phase, RecDataset, ValOrTestDataset,
+                      load_masters, load_user_consistencies)
 from .jme import JME
 from .logger import getLogger
 from .parser import parse_args
@@ -70,6 +71,9 @@ if __name__ == '__main__':
     user_entity_map = torch.tensor(train_kg_data.user_entity_map).to(device)
     item_entity_map = torch.tensor(train_kg_data.item_entity_map).to(device)
 
+    user_masters, item_masters = load_masters(data_path, device)
+    user_consistencies = load_user_consistencies(data_path, device)
+
     model = JME(
         entity_size=train_kg_data.entity_size,
         relation_size=train_kg_data.relation_size,
@@ -84,7 +88,7 @@ if __name__ == '__main__':
         use_mbl=args.use_mbl,
         use_epl=args.use_epl,
         user_masters=user_masters,
-        job_masters=job_masters,
+        item_masters=item_masters,
         user_consistencies=user_consistencies,
         use_csw=args.use_csw,
         consistency_weight=args.consistency_weight,

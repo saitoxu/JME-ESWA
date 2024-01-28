@@ -1,8 +1,9 @@
-import torch
-from torch.utils.data import Dataset
-from enum import Enum
 import random
 from collections import defaultdict
+from enum import Enum
+
+import torch
+from torch.utils.data import Dataset
 
 
 class RecDataset(Dataset):
@@ -150,3 +151,55 @@ def calc_max_ids(data_path: str):
                 user_size = max(user_size, user_id + 1)
                 item_size = max(item_size, max(item_ids) + 1)
     return user_size, item_size
+
+
+def load_masters(data_path: str, device: str):
+    results = []
+    for fname in ["user_masters.txt", "item_masters.txt"]:
+        result = []
+        with open(f"{data_path}/{fname}") as f:
+            for line in f:
+                _, *masters = list(map(lambda x: int(x), line.split(" ")))
+                result.append(masters)
+        results.append(torch.tensor(result, dtype=torch.int, device=device))
+    return results
+
+
+def load_user_consistencies(data_path: str, device: str):
+    behavior_data = ['train_view.txt', 'train_fav.txt']
+
+    user_masters, job_masters = _load_masters(data_path)
+    user_interactions = [set() for _ in range(len(user_masters))]
+    user_similarities = [[] for _ in range(len(user_masters))]
+    tfidf_matrix = []
+    for file_name in behavior_data:
+        with open(f'{data_path}/{file_name}') as f:
+            for line in f:
+                user_id, *item_ids = list(map(lambda x: int(x), line.split(' ')))
+                user_master = user_masters[user_id]
+                for item_id in item_ids:
+                    if item_id in user_interactions[user_id]:
+                        continue
+                    user_interactions[user_id].add(item_id)
+                    job_master = job_masters[item_id]
+                    similarity = len(user_master & job_master) / len(user_master | job_master)
+                    user_similarities[user_id].append(similarity)
+    consistencies = []
+    for user_id in range(len(user_masters)):
+        avg_similarity = sum(user_similarities[user_id]) / len(user_similarities[user_id])
+        consistencies.append(avg_similarity)
+    return torch.tensor(consistencies, dtype=torch.float, device=device), torch.tensor(tfidf_matrix, dtype=torch.float, device=device)
+
+
+def _load_masters(data_path: str):
+    results = []
+    for fname in ["user_masters.txt", "item_masters.txt"]:
+        result = defaultdict(set)
+        with open(f"{data_path}/{fname}") as f:
+            for line in f:
+                user_id, *masters = list(map(lambda x: int(x), line.split(" ")))
+                for i, master in enumerate(masters):
+                    if master == 1:
+                        result[user_id].add(i)
+        results.append(result)
+    return results
