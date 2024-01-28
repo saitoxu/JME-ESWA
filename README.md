@@ -36,8 +36,9 @@ You can see the usage by the following command.
 
 ```sh
 $ poetry run python -m jme.train -h
-usage: train.py [-h] [--seed SEED] [--dataset [DATASET]] [--behavior_data [BEHAVIOR_DATA]] [--kge [KGE]] [--epoch EPOCH] [--batch_size BATCH_SIZE] [--dim DIM] [--lr LR]
-                [--patience PATIENCE] [--Ks [KS]] [--model_path [MODEL_PATH]] [--use_boac USE_BOAC] [--use_bam USE_BAM] [--use_epl USE_EPL] [--neg_size NEG_SIZE]
+usage: train.py [-h] [--seed SEED] [--dataset [DATASET]] [--behavior_data [BEHAVIOR_DATA]] [--kge [KGE]] [--epoch EPOCH] [--batch_size BATCH_SIZE] [--dim DIM] [--lr LR] [--patience PATIENCE]
+                [--Ks [KS]] [--model_path [MODEL_PATH]] [--use_boac USE_BOAC] [--use_bam USE_BAM] [--use_epl USE_EPL] [--use_mbl USE_MBL] [--use_csw USE_CSW]
+                [--consistency_weight CONSISTENCY_WEIGHT] [--neg_size NEG_SIZE]
 
 Run JME.
 
@@ -60,6 +61,10 @@ optional arguments:
   --use_boac USE_BOAC   0: Without Behavior Overlap Aware Converter, 1: Full model.
   --use_bam USE_BAM     0: Without Behavior Aware Margin Function, 1: Full model.
   --use_epl USE_EPL     0: Without EPL module, 1: Full model.
+  --use_mbl USE_MBL     0: Without MBL module, 1: Full model.
+  --use_csw USE_CSW     0: Without Consistency and Similarity Weighting, 1: Full model.
+  --consistency_weight CONSISTENCY_WEIGHT
+                        Consistency weight.
   --neg_size NEG_SIZE   Negative sampling size.
 ```
 
@@ -147,6 +152,10 @@ The format is below.
 <item_entity_id> <item_id>
 ...
 ```
+
+**user_masters.txt**
+
+**item_masters.txt**
 
 ## Citation
 
