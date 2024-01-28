@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument('--epoch', type=int, default=500, help='Number of epoch.')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size.')
     parser.add_argument('--dim', type=int, default=64, help='Embedding size.')
-    parser.add_argument('--lr', type=float, default=1e-4, help='Learning rate.')
+    parser.add_argument('--lr', type=float, default=5e-4, help='Learning rate.')
     parser.add_argument('--patience', type=int, default=5, help='Number of epoch for early stopping.')
     parser.add_argument('--Ks', nargs='?', default='[5,10,20]', help='Calculate metric@K when evaluating.')
     parser.add_argument('--model_path', nargs='?', default='', help='Model path for evaluation.')
@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument('--use_mbl', type=int, default=1, help='0: Without MBL module, 1: Full model.')
     parser.add_argument('--use_csw', type=int, default=1, help='0: Without Consistency and Similarity Weighting, 1: Full model.')
     parser.add_argument('--consistency_weight', type=float, default=0.1, help='Consistency weight.')
-    parser.add_argument('--neg_size', type=int, default=1, help='Negative sampling size.')
+    parser.add_argument('--neg_size', type=int, default=2, help='Negative sampling size.')
 
     args = parser.parse_args()
 

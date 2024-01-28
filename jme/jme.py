@@ -110,7 +110,7 @@ class JME(nn.Module):
         neg_dist = (uj - j).norm(dim=1)
         rec_loss = torch.clamp(pos_dist - neg_dist + m, min=0.0).mean()
         loss += rec_loss
-        if self.use_behavior_aware_margin:
+        if self.use_bam:
             loss += torch.norm(self.bam_linear.weight, p=2)
         return loss
 

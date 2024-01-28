@@ -155,7 +155,25 @@ The format is below.
 
 **user_masters.txt**
 
+Explicit preference data of users.
+Rows represent users, and columns represent category data.
+If user i and category data j are directly linked in the knowledge graph data, specify 1; otherwise, specify 0.
+
+```txt
+<0 or 1> <0 or 1> <0 or 1> ...
+...
+```
+
 **item_masters.txt**
+
+Attribute data of items.
+Rows represent items, and columns represent category data.
+Specify 1 if item i is directly linked to category data j in the knowledge graph data; otherwise, specify 0.
+
+```txt
+<0 or 1> <0 or 1> <0 or 1> ...
+...
+```
 
 ## Citation
 

@@ -159,7 +159,7 @@ def load_masters(data_path: str, device: str):
         result = []
         with open(f"{data_path}/{fname}") as f:
             for line in f:
-                _, *masters = list(map(lambda x: int(x), line.split(" ")))
+                masters = list(map(lambda x: int(x), line.split(" ")))
                 result.append(masters)
         results.append(torch.tensor(result, dtype=torch.int, device=device))
     return results
@@ -195,10 +195,10 @@ def _load_masters(data_path: str):
     for fname in ["user_masters.txt", "item_masters.txt"]:
         result = defaultdict(set)
         with open(f"{data_path}/{fname}") as f:
-            for line in f:
-                user_id, *masters = list(map(lambda x: int(x), line.split(" ")))
-                for i, master in enumerate(masters):
+            for i, line in enumerate(f):
+                masters = list(map(lambda x: int(x), line.split(" ")))
+                for j, master in enumerate(masters):
                     if master == 1:
-                        result[user_id].add(i)
+                        result[i].add(j)
         results.append(result)
     return results
