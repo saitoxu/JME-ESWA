@@ -8,8 +8,8 @@ To achieve this goal, the following two types of data are available: (1) auxilia
 Some researchers proposed job recommendation by addressing either of them.
 However, they have not focused on simultaneously addressing both (1) and (2) so far. Given this point, we propose a method for job recommendation that employs auxiliary behavior data and each user's explicit preference data simultaneously.
 Additionally, our proposed method addresses multiple behavior overlaps and refines the latent representations.
-Furthermore, the integration method of the latent representations obtained from each of the two modules considers the consistency of user preferences and the similarity with job postings, enabling a more accurate estimation of user preferences.
-Experimental results on our dataset constructed from an actual job search website show that our proposed model outperforms several state-of-the-arts as measured by MRR and nDCG.
+Furthermore, the integration method of the latent representations obtained from each of the two modules addresses the consistency of user preferences and the similarity with job postings, enabling a more accurate estimation of user preferences.
+Experimental results on our dataset constructed from an actual job search website show that our proposed model outperforms several state-of-the-arts in terms of MRR and nDCG.
 
 ## Usage
 
