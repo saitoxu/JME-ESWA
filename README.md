@@ -180,5 +180,16 @@ Specify 1 if item i is directly linked to category data j in the knowledge graph
 If you make use of this code or our algorithm, please cite the following paper.
 
 ```txt
-TODO
+@article{SAITO2024125149,
+  title = {Leveraging multiple behaviors and explicit preferences for job recommendation},
+  journal = {Expert Systems with Applications},
+  volume = {258},
+  pages = {125149},
+  year = {2024},
+  issn = {0957-4174},
+  doi = {https://doi.org/10.1016/j.eswa.2024.125149},
+  url = {https://www.sciencedirect.com/science/article/pii/S0957417424020165},
+  author = {Yosuke Saito and Kazunari Sugiyama},
+  keywords = {Job recommendation, Multi-behavior recommendation, Graph representation learning, Metric learning}
+}
 ```
